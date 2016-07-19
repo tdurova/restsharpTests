@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RestsharpTests
 {
-    public class Class1
+    class AppHostBase
     {
     }
 }
