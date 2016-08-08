@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using RestSharp;
 
 namespace RestsharpTests.tests
 {
@@ -15,17 +16,14 @@ namespace RestsharpTests.tests
         {
             // Set up code here.
             Console.WriteLine("setup");
-
-            AppHost = new ServiceTestAppHost();
-            AppHost.Init();
-            AppHost.Start(ServiceTestAppHost.BaseUrl);
+            var restClient = new RestClient("http://example.com");
         }
 
         [TearDown]
         public void RunAfterAnyTests()
         {
             // Clear up code here.
-            AppHost.Dispose();
+            
         }
     }
 }
