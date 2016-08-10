@@ -15,12 +15,6 @@ namespace RestsharpTests
 {
     class RestSchemaValidator
     {
-        static readonly string ResourceLocation = typeof(RestSchemaValidator).Namespace;
-
-        public static void ValidateResponse(string resourceFileName, string restResponseContent)
-        {
-            //JSchema schema;
-
-        }
+      
     }
 }

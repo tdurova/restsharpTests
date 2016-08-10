@@ -10,12 +10,7 @@ namespace RestsharpTests.tests
 {
     class Test1 : TestBase
     {
-        [Test]
-        public void TestGetStones()
-        {
-            Console.WriteLine("test 1");
-        }
-
+    
         [Test]
         public void TestGetStones2()
         {

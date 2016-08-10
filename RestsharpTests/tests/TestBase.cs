@@ -8,15 +8,14 @@ using RestSharp;
 
 namespace RestsharpTests.tests
 {
-    class TestBase
+    public class TestBase
     {
 
         [SetUp]
         public void RunBeforeAnyTests()
         {
             // Set up code here.
-            Console.WriteLine("setup");
-            var restClient = new RestClient("http://example.com");
+            
         }
 
         [TearDown]
