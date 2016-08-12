@@ -63,6 +63,8 @@
   <ItemGroup>
     <Compile Include="Config.cs" />
     <Compile Include="DirAppend.cs" />
+    <Compile Include="ImplicitConsoleClient.cs" />
+    <Compile Include="RestsharpClient.cs" />
     <Compile Include="RestSchemaValidator.cs" />
     <Compile Include="tests\MyTest.cs" />
     <Compile Include="UserLogin.cs" />

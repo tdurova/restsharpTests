@@ -16,12 +16,12 @@ namespace RestsharpTests.tests
         {
             Console.WriteLine("test 1");
 
-            var client = new RestClient("http://testing.cutwise.com/");
+            //var client = new RestClient("http://testing.cutwise.com/");
             var request = new RestRequest("api/frontend/v1/stones", Method.GET);
-            IRestResponse response = client.Execute(request);
+            IRestResponse response = RestsharpClient.Client.Execute(request);
             Console.WriteLine(response.Content);
 
-            client.ExecuteAsync(request, response1 => {
+            RestsharpClient.Client.ExecuteAsync(request, response1 => {
                                                           Console.WriteLine(response1.Content); });
 
         }

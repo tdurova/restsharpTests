@@ -4,7 +4,6 @@ namespace RestsharpTests
 {
     public class Config
     {
-        public static string loginPageUrl;
         public static string ApplicationMainUrl => ConfigurationManager.AppSettings["applicationMainUrl"];
 
         public static string AppLogin => ConfigurationManager.AppSettings["login"];
@@ -17,6 +16,7 @@ namespace RestsharpTests
 
         public static string LoginPageUrl { get; internal set; }
 
-        
+        public static string ResponseType { get; internal set; }
+        public static string loginPageUrl { get; internal set; }
     }
 }

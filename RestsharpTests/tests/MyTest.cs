@@ -6,27 +6,35 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using ImplicitConsoleClient;
 using NUnit.Framework;
-using RestsharpTests.helpers;
 using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Extensions;
 using Newtonsoft.Json;
+using RestsharpTests.helpers;
 
 namespace RestsharpTests.tests
 {
     public class MyTests : TestBase
     {
+        HelperBase helperBase = new HelperBase();
+
         [Test]
-        public void GetLogIn () { // first do any necessary database setup. Or you could have a
+        public void Login()
+        {
+            // first do any necessary database setup. Or you could have a
 
-            HelperBase helper = new HelperBase();
+            //var accessToken = helperBase.GetAuthenticityToken(Config.AppLogin, Config.AppPassword);
 
-            var accessToken = helper.GetAuthenticityToken(Config.AppLogin, Config.AppPassword);
+            //Console.WriteLine(accessToken);
 
-            Console.WriteLine(accessToken);
 
-            RestClient client = new RestClient(Config.ApplicationMainUrl);
+            ImplicitClient ImplicitClient = new ImplicitClient(Config.ApplicationMainUrl, Config.ConsumerId,
+                Config.RedirectUrl,Config.ResponseType,"","","");
+
+            var token = ImplicitClient.GetResponseTokenAsync(Config.AppLogin, Config.AppPassword);
+            Console.WriteLine(token.Result.AccessToken);
 
             /*RestRequest request = new RestRequest("api/frontend/v1/stones", Method.GET);
             request.AddParameter("Authorization",
@@ -36,17 +44,9 @@ namespace RestsharpTests.tests
 
             var response = client.Execute(request); */
 
-            Console.WriteLine(accessToken);
-            
             //DirAppend.LogMessageToFile(response.Content);
-
         }
 
-        /*[Test(Description = "Ticket # where you implemented the use case the client is paying for")]
-        public void MySchemaValidationTest()
-        {
-            
-        }*/
+       
     }
-
 }
