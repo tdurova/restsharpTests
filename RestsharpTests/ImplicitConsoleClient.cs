@@ -64,7 +64,7 @@ namespace ImplicitConsoleClient
             return _loginPageResponse = result;
         }
 
-        public async Task<ResponseToken> GetResponseTokenAsync(string email, string password)
+        public async Task<ResponseToken> GetResponseTokenAsync(string username, string password)
         {
             if (_loginPageResponse == null)
             {
@@ -80,9 +80,12 @@ namespace ImplicitConsoleClient
             var content = new FormUrlEncodedContent(
                     new List<KeyValuePair<string, string>>
                     {
-                        new KeyValuePair<string, string>("Email", email),
-                        new KeyValuePair<string, string>("Password", password),
-                        new KeyValuePair<string, string>("__RequestVerificationToken", requestVerificationToken)
+                        new KeyValuePair<string, string>("_username", username),
+                        new KeyValuePair<string, string>("_password", password),
+                        //new KeyValuePair<string, string>("__RequestVerificationToken", requestVerificationToken),
+                        new KeyValuePair<string, string>("_csrf_token", "pepaSlWcBp6HqBQD0_0gFzZupRO1XQXlUv31JoZocoE"),
+                        new KeyValuePair<string, string>("_remember_me", "on")
+                        
                     });
             request.Content = content;
 
