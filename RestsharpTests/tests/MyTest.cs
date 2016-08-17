@@ -12,6 +12,8 @@ using RestSharp.Authenticators;
 using RestSharp.Extensions;
 using Newtonsoft.Json;
 using RestsharpTests.helpers;
+using static RestsharpTests.helpers.HelperBase;
+using RestsharpTests;
 
 namespace RestsharpTests.tests
 {
@@ -21,11 +23,11 @@ namespace RestsharpTests.tests
         public void Login()
         {
             HelperBase helperBase = new HelperBase();
-            var accessToken = helperBase.GetAuthToken(Config.AppLogin, Config.AppPassword);
+            var token = helperBase.GetAuthToken(Config.AppLogin, Config.AppPassword);
 
-            Console.WriteLine(accessToken);
-
-            RestsharpClient.Client.Authenticator = new OAuth2UriQueryParameterAuthenticator(accessToken); //works
+            Console.WriteLine(token.access_token);
+            
+            RestsharpClient.Client.Authenticator = new OAuth2UriQueryParameterAuthenticator(token.access_token); //works
         }
     }
 }

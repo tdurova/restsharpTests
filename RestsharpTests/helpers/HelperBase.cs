@@ -6,6 +6,7 @@ using System.Net;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using RestSharp;
 using RestSharp.Authenticators;
 
@@ -18,34 +19,39 @@ namespace RestsharpTests.helpers
 
         public string AccessToken { get; set; }
 
-        public string GetAuthToken(string username, string password)
+        public ResponseToken GetAuthToken(string username, string password)
         {
             var cookieJar = new CookieContainer();
-            
-            var client = new RestClient("http://staging.cutwise.com")
-            {
-                Authenticator = new HttpBasicAuthenticator("test", "1234567"),
-                CookieContainer = cookieJar
-            };
-            var request = new RestRequest("api/oauth/v2/token", Method.GET);
 
-            string client_id = Config.ClientId;
-            Console.WriteLine(client_id);
+            RestsharpClient.Client.CookieContainer = cookieJar;
 
-            request.AddParameter("client_id", Config.ClientId);
-            request.AddParameter("grant_type", "password");
-            request.AddParameter("username", Config.AppLogin);
-            request.AddParameter("password", Config.AppPassword);
-            request.AddParameter("client_secret", Config.ClientSecret);
+            _request = new RestRequest("api/oauth/v2/token", Method.GET);
+
+            _request.AddParameter("client_id", Config.ClientId);
+            _request.AddParameter("grant_type", "password");
+            _request.AddParameter("username", username);
+            _request.AddParameter("password", password);
+            _request.AddParameter("client_secret", Config.ClientSecret);
 
 
             //Run once to get cookie.
-            var response = client.Execute(request);
+            _response = RestsharpClient.Client.Execute(_request);
 
             //Run second time to get actual data
-            response = client.Execute(request);
+            _response = RestsharpClient.Client.Execute(_request);
 
-            return response.Content;
+            var token = JsonConvert.DeserializeObject<ResponseToken>(_response.Content);
+
+            return token;
+        }
+
+        public class ResponseToken
+        {
+            public string access_token { get; set; }
+            public int expires_in { get; set; }
+            public string token_type { get; set; }
+            public string scope { get; set; }
+            public string refresh_token { get; set; }
         }
     }
 }
