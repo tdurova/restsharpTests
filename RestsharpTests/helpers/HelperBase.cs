@@ -47,12 +47,5 @@ namespace RestsharpTests.helpers
 
             return response.Content;
         }
-
-        public class DataForm
-        {
-            public string login { get; set; }
-            public string TxtPassword { get; set; }
-        }
-
     }
 }

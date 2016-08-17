@@ -17,15 +17,15 @@ namespace RestsharpTests.tests
 {
     public class MyTests : TestBase
     {
-        HelperBase helperBase = new HelperBase();
-
         [Test]
         public void Login()
         {
+            HelperBase helperBase = new HelperBase();
             var accessToken = helperBase.GetAuthToken(Config.AppLogin, Config.AppPassword);
 
             Console.WriteLine(accessToken);
 
+            RestsharpClient.Client.Authenticator = new OAuth2UriQueryParameterAuthenticator(accessToken); //works
         }
     }
 }
