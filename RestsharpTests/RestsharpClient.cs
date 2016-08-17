@@ -17,10 +17,15 @@ namespace RestsharpTests
             {
                 if (_client == null)
                 {
-                    _client = new RestClient();
+                    _client = Run();
                 }
                 return _client;
             }
+        }
+
+        private static RestClient Run()
+        {
+            return new RestClient();
         }
 
         public static void CloseClient()

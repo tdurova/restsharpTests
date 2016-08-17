@@ -5,18 +5,12 @@ namespace RestsharpTests
     public class Config
     {
         public static string ApplicationMainUrl => ConfigurationManager.AppSettings["applicationMainUrl"];
-
         public static string AppLogin => ConfigurationManager.AppSettings["login"];
-
         public static string AppPassword => ConfigurationManager.AppSettings["password"];
-
-        public static string ConsumerId { get; internal set; }
-
-        public static string RedirectUrl { get; internal set; }
-
-        public static string LoginPageUrl { get; internal set; }
-
-        public static string ResponseType { get; internal set; }
-        public static string loginPageUrl { get; internal set; }
+        public static string ClientId => ConfigurationManager.AppSettings["clientId"];
+        public static string RedirectUrl => ConfigurationManager.AppSettings["redirectURL"];
+        public static string LoginPageUrl => ConfigurationManager.AppSettings["loginPageUrl"];
+        public static string ResponseType => ConfigurationManager.AppSettings["responseType"];
+        public static string ClientSecret => ConfigurationManager.AppSettings["clientSecret"];
     }
 }
