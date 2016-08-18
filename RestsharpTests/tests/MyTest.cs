@@ -11,8 +11,9 @@ using RestSharp;
 using RestSharp.Authenticators;
 using RestSharp.Extensions;
 using Newtonsoft.Json;
+using NLog;
 using RestsharpTests.helpers;
-using static RestsharpTests.helpers.HelperBase;
+using static RestsharpTests.helpers.ApiHelper;
 using RestsharpTests;
 
 namespace RestsharpTests.tests
@@ -22,8 +23,9 @@ namespace RestsharpTests.tests
         [Test]
         public void Login()
         {
-            HelperBase helperBase = new HelperBase();
-            var token = helperBase.GetAuthToken(Config.AppLogin, Config.AppPassword);
+            ApiHelper apiHelper = new ApiHelper(RestsharpClient.Client, RestsharpClient.Logger);
+
+            var token = apiHelper.GetAuthToken(Config.AppLogin, Config.AppPassword);
 
             Console.WriteLine(token.access_token);
 
@@ -34,10 +36,13 @@ namespace RestsharpTests.tests
 
             // execute the request
             IRestResponse response = RestsharpClient.Client.Execute(request);
-            var content = response.Content; // raw content as string
-            Console.WriteLine(content);
-
-          
+            
+            
+            //Example to get request body
+            /*request.AddParameter("application/json", "4234234", ParameterType.RequestBody);
+            var content = request.Parameters.Find(param => param.Type == ParameterType.RequestBody).Value.ToString();
+                // Get the raw request body
+            Console.WriteLine(content);*/
         }
     }
 }

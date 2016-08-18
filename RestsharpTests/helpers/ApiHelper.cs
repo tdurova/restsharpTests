@@ -7,12 +7,13 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using NLog;
 using RestSharp;
 using RestSharp.Authenticators;
 
 namespace RestsharpTests.helpers
 {
-    public class HelperBase
+    public class ApiHelper : RestApiBase
     {
         private RestRequest _request;
         private IRestResponse _response;
@@ -52,6 +53,11 @@ namespace RestsharpTests.helpers
             public string token_type { get; set; }
             public string scope { get; set; }
             public string refresh_token { get; set; }
+        }
+
+        public ApiHelper(IRestClient restClient, ILogger logger) : base(restClient, logger)
+        {
+
         }
     }
 }
