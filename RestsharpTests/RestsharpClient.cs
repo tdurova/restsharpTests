@@ -8,8 +8,9 @@ using RestSharp;
 
 namespace RestsharpTests
 {
-    public static class RestsharpClient
+    public class RestsharpClient : RestsharpClientBase
     {
+        
         private static Logger _logger = null; 
         public static Logger Logger
         {
@@ -23,9 +24,31 @@ namespace RestsharpTests
             }
         }
 
-        
-        private static RestClient _client = null;
+        private IRestRequest _request = null;
+        public IRestRequest Request
+        {
+            get { return _request; }
+            set { _request = value; }
+        }
 
+        private IRestResponse _response = null;
+        public IRestResponse Response
+        {
+            get
+            {
+                _response = MyExecute(Request);
+                return _response;
+            }
+            set { _response = value; }
+        }
+
+
+        public RestsharpClient TRestsharpClient
+        {
+            get { return MyExecute<RestsharpClient>(Request); }
+        }
+
+        private static RestClient _client = null;
         public static IRestClient Client
         {
             get
@@ -58,6 +81,15 @@ namespace RestsharpTests
             {
                 CloseClient();
             }
+        }
+
+        public RestsharpClient(IRestClient restClient, ILogger logger) : base(restClient, logger)
+        {
+        }
+
+        public RestsharpClient()
+        {
+            Run();
         }
     }
 }

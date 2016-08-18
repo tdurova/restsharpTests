@@ -7,18 +7,23 @@ using RestSharp;
 
 namespace RestsharpTests
 {
-    public abstract class RestApiBase
+    public abstract class RestsharpClientBase
     {
         protected readonly IRestClient _restClient;
         protected readonly ILogger _logger;
 
-        protected RestApiBase(IRestClient restClient, ILogger logger)
+        protected RestsharpClientBase(IRestClient restClient, ILogger logger)
         {
             _restClient = restClient;
             _logger = logger;
         }
 
-        protected virtual IRestResponse Execute(IRestRequest request)
+        protected RestsharpClientBase()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected virtual IRestResponse MyExecute(IRestRequest request)
         {
             IRestResponse response = null;
             var stopWatch = new Stopwatch();
@@ -45,7 +50,7 @@ namespace RestsharpTests
             return null;
         }
 
-        protected virtual T Execute<T>(IRestRequest request) where T : new()
+        protected virtual T MyExecute<T>(IRestRequest request) where T : new()
         {
             IRestResponse response = null;
             var stopWatch = new Stopwatch();

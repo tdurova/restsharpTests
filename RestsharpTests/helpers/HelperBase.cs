@@ -13,7 +13,7 @@ using RestSharp.Authenticators;
 
 namespace RestsharpTests.helpers
 {
-    public class ApiHelper : RestApiBase
+    public class HelperBase
     {
         private RestRequest _request;
         private IRestResponse _response;
@@ -53,11 +53,6 @@ namespace RestsharpTests.helpers
             public string token_type { get; set; }
             public string scope { get; set; }
             public string refresh_token { get; set; }
-        }
-
-        public ApiHelper(IRestClient restClient, ILogger logger) : base(restClient, logger)
-        {
-
         }
     }
 }

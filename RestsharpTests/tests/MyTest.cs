@@ -13,7 +13,6 @@ using RestSharp.Extensions;
 using Newtonsoft.Json;
 using NLog;
 using RestsharpTests.helpers;
-using static RestsharpTests.helpers.ApiHelper;
 using RestsharpTests;
 
 namespace RestsharpTests.tests
@@ -23,9 +22,9 @@ namespace RestsharpTests.tests
         [Test]
         public void Login()
         {
-            ApiHelper apiHelper = new ApiHelper(RestsharpClient.Client, RestsharpClient.Logger);
+            HelperBase helperBase = new HelperBase();
 
-            var token = apiHelper.GetAuthToken(Config.AppLogin, Config.AppPassword);
+            var token = helperBase.GetAuthToken(Config.AppLogin, Config.AppPassword);
 
             Console.WriteLine(token.access_token);
 
