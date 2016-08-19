@@ -10,12 +10,11 @@ namespace RestsharpTests.tests
 {
     public class TestBase
     {
-        
         [SetUp]
         public void RunBeforeAnyTests()
         {
             //var client = new RestClient();
-            RestApi.Client.BaseUrl = new Uri(Config.ApplicationMainUrl);
+            RestClient.Client.BaseUrl = new Uri(Config.ApplicationMainUrl);
         }
 
         [TearDown]

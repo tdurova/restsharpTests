@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="api\RestsharpClient.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="helpers\DirAppend.cs" />
     <Compile Include="api\RestApiBase.cs" />

@@ -15,22 +15,15 @@ namespace RestsharpTests.helpers
 {
     public class HelperBase
     {
-
-
         public string AccessToken { get; set; }
 
         public ResponseToken GetAuthToken(string username, string password)
         {
+            RestClient trueClient = new RestClient();
+            RestApi Api = new RestApi(trueClient, RestApi.Logger);
 
-
-
-         RestClient trueCLient = new RestClient();
-        RestApi Api = new RestApi(trueCLient, RestApi.Logger);
-       
-        var cookieJar = new CookieContainer();
-            trueCLient.CookieContainer = cookieJar;
-         
-           // Api.CookieContainer = cookieJar;
+            var cookieJar = new CookieContainer();
+            trueClient.CookieContainer = cookieJar;
 
             var request = new RestRequest("api/oauth/v2/token", Method.GET);
 
@@ -40,12 +33,11 @@ namespace RestsharpTests.helpers
             request.AddParameter("password", password);
             request.AddParameter("client_secret", Config.ClientSecret);
 
-           
             //Run once to get cookie.
             var response = RestApi.Client.Execute(request);
             response = Api.Execute(request);
             //Run second time to get actual data
-         //   response = RestApi.Client.Execute(request);
+            //   response = RestApi.Client.Execute(request);
 
             var token = JsonConvert.DeserializeObject<ResponseToken>(response.Content);
 
