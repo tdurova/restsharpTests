@@ -13,19 +13,18 @@ namespace RestsharpTests
 * Класс расширяет базовый применимо к тестируемому API,
 * добавляя обработку заголовков, в т.ч. аксесс токенов (для OAuth 2.0)
 */
-
-    public class RestApi : RestApiBase
+ public class RestApi : RestApiBase
     {
-        private static IRestClient _client;
+       private static IRestClient _client = null;
 
         public RestApi(IRestClient restClient, ILogger logger) : base(restClient, logger)
         {
         }
 
-        //public ApiModel Execute(IRestRequest request)
-        //{
-        //    return Execute<ApiModel>(request);
-        //}
+        public new ApiModel Execute<ApiModel>(IRestRequest request) where ApiModel : new()
+        {
+            return base.Execute<ApiModel>(request);
+        }
 
         public new IRestResponse Execute(IRestRequest request)
         {

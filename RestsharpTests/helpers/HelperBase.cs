@@ -19,11 +19,10 @@ namespace RestsharpTests.helpers
 
         public ResponseToken GetAuthToken(string username, string password)
         {
-            RestClient trueClient = new RestClient();
-            RestApi Api = new RestApi(trueClient, RestApi.Logger);
+            RestApi Api = new RestApi(RestsharpClient.Client, RestApi.Logger);
 
             var cookieJar = new CookieContainer();
-            trueClient.CookieContainer = cookieJar;
+            RestsharpClient.Client.CookieContainer = cookieJar;
 
             var request = new RestRequest("api/oauth/v2/token", Method.GET);
 
