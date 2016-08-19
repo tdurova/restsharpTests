@@ -15,33 +15,39 @@ namespace RestsharpTests.helpers
 {
     public class HelperBase
     {
-        private RestRequest _request;
-        private IRestResponse _response;
+
 
         public string AccessToken { get; set; }
 
         public ResponseToken GetAuthToken(string username, string password)
         {
-            var cookieJar = new CookieContainer();
-
-            RestsharpClient.Client.CookieContainer = cookieJar;
-
-            _request = new RestRequest("api/oauth/v2/token", Method.GET);
-
-            _request.AddParameter("client_id", Config.ClientId);
-            _request.AddParameter("grant_type", "password");
-            _request.AddParameter("username", username);
-            _request.AddParameter("password", password);
-            _request.AddParameter("client_secret", Config.ClientSecret);
 
 
+
+         RestClient trueCLient = new RestClient();
+        RestApi Api = new RestApi(trueCLient, RestApi.Logger);
+       
+        var cookieJar = new CookieContainer();
+            trueCLient.CookieContainer = cookieJar;
+         
+           // Api.CookieContainer = cookieJar;
+
+            var request = new RestRequest("api/oauth/v2/token", Method.GET);
+
+            request.AddParameter("client_id", Config.ClientId);
+            request.AddParameter("grant_type", "password");
+            request.AddParameter("username", username);
+            request.AddParameter("password", password);
+            request.AddParameter("client_secret", Config.ClientSecret);
+
+           
             //Run once to get cookie.
-            _response = RestsharpClient.Client.Execute(_request);
-
+            var response = RestApi.Client.Execute(request);
+            response = Api.Execute(request);
             //Run second time to get actual data
-            _response = RestsharpClient.Client.Execute(_request);
+         //   response = RestApi.Client.Execute(request);
 
-            var token = JsonConvert.DeserializeObject<ResponseToken>(_response.Content);
+            var token = JsonConvert.DeserializeObject<ResponseToken>(response.Content);
 
             return token;
         }

@@ -7,23 +7,24 @@ using RestSharp;
 
 namespace RestsharpTests
 {
-    public abstract class RestsharpClientBase
+/**
+ * От этого класса наследуются классы работы с разными API. Например, с тестируемым.
+ * Класс реализован с помощью HTTP REST клиента Restsharp.
+ * @link http://restsharp.org/
+ **/
+
+    public abstract class RestApiBase
     {
         protected readonly IRestClient _restClient;
         protected readonly ILogger _logger;
-
-        protected RestsharpClientBase(IRestClient restClient, ILogger logger)
+       
+        protected RestApiBase(IRestClient restClient, ILogger logger)
         {
             _restClient = restClient;
             _logger = logger;
         }
 
-        protected RestsharpClientBase()
-        {
-            throw new NotImplementedException();
-        }
-
-        protected virtual IRestResponse MyExecute(IRestRequest request)
+        protected virtual IRestResponse Execute(IRestRequest request)
         {
             IRestResponse response = null;
             var stopWatch = new Stopwatch();
@@ -38,7 +39,7 @@ namespace RestsharpTests
 
                 return response;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Handle exceptions in your CUSTOM CODE (restSharp will never throw itself)
             }
@@ -50,7 +51,7 @@ namespace RestsharpTests
             return null;
         }
 
-        protected virtual T MyExecute<T>(IRestRequest request) where T : new()
+        protected virtual T Execute<T>(IRestRequest request) where T : new()
         {
             IRestResponse response = null;
             var stopWatch = new Stopwatch();
@@ -68,7 +69,7 @@ namespace RestsharpTests
                 var returnType = JsonConvert.DeserializeObject<T>(response.Content);
                 return returnType;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 // Handle exceptions in your CUSTOM CODE (restSharp will never throw itself)
                 // Handle exceptions in deserialization
