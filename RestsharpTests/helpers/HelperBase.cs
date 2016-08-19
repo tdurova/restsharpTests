@@ -19,7 +19,8 @@ namespace RestsharpTests.helpers
 
         public ResponseToken GetAuthToken(string username, string password)
         {
-            RestApi Api = new RestApi(RestsharpClient.Client, RestApi.Logger);
+            ILogger logger = LogManager.GetCurrentClassLogger();
+            RestApi Api = new RestApi(RestsharpClient.Client, logger);
 
             var cookieJar = new CookieContainer();
             RestsharpClient.Client.CookieContainer = cookieJar;
