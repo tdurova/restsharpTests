@@ -4,6 +4,7 @@ using System.Linq;
 using NLog;
 using Newtonsoft.Json;
 using RestSharp;
+using ServiceStack.Text;
 
 namespace RestsharpTests
 {
@@ -114,9 +115,9 @@ namespace RestsharpTests
                     errorMessage = response.ErrorMessage,
                 };
 
-                return string.Format("Request completed in {0} ms, Request: {1}, Response: {2}",
+                return string.Format( "Request completed in {0} ms, Request: {1}, Response: {2}",
                     durationMs, JsonConvert.SerializeObject(requestToLog),
-                    JsonConvert.SerializeObject(responseToLog));
+                    JsonConvert.SerializeObject(responseToLog)); 
             });
         }
     }

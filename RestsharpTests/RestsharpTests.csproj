@@ -50,6 +50,10 @@
       <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ServiceStack.Text, Version=4.0.62.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceStack.Text.4.0.62\lib\net40\ServiceStack.Text.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StringExtensions, Version=1.0.0.39390, Culture=neutral, PublicKeyToken=0bddda93cbf7b82a, processorArchitecture=MSIL">
       <HintPath>..\packages\StringExtensions.1.0.1.1\lib\net40-client\StringExtensions.dll</HintPath>
       <Private>True</Private>
@@ -66,7 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="api\RestsharpClient.cs" />
-    <Compile Include="Config.cs" />
+    <Compile Include="config\Config.cs" />
     <Compile Include="helpers\DirAppend.cs" />
     <Compile Include="api\RestApiBase.cs" />
     <Compile Include="api\RestApi.cs" />
@@ -79,10 +83,17 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="config.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="data\json-schema1.json" />
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
