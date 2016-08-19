@@ -28,14 +28,13 @@ namespace RestsharpTests.tests
 
             Console.WriteLine(token.access_token);
 
-            RestApi.Client.Authenticator = new OAuth2UriQueryParameterAuthenticator(token.access_token); //works
+            RestsharpClient.Client.Authenticator = new OAuth2UriQueryParameterAuthenticator(token.access_token); //works
             var request = new RestRequest("api/frontend/v1/profiles/5", Method.GET);
 
-            RestApi.Client.Authenticator.Authenticate(RestApi.Client, request);
+            RestsharpClient.Client.Authenticator.Authenticate(RestsharpClient.Client, request);
 
             // execute the request
-            IRestResponse response = RestApi.Client.Execute(request);
-
+            IRestResponse response = RestsharpClient.Client.Execute(request);
 
             //Example to get request body
             /*request.AddParameter("application/json", "4234234", ParameterType.RequestBody);

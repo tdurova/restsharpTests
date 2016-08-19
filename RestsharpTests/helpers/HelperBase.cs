@@ -32,11 +32,9 @@ namespace RestsharpTests.helpers
             request.AddParameter("password", password);
             request.AddParameter("client_secret", Config.ClientSecret);
 
-            //Run once to get cookie.
-            var response = RestApi.Client.Execute(request);
-            response = Api.Execute(request);
-            //Run second time to get actual data
-            //   response = RestApi.Client.Execute(request);
+            var response = RestsharpClient.Client.Execute(request);
+
+            Api.Execute(request);
 
             var token = JsonConvert.DeserializeObject<ResponseToken>(response.Content);
 

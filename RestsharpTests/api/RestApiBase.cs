@@ -15,8 +15,8 @@ namespace RestsharpTests
 
     public abstract class RestApiBase
     {
-        protected readonly IRestClient _restClient;
-        protected readonly ILogger _logger;
+        protected IRestClient _restClient;
+        protected ILogger _logger;
        
         protected RestApiBase(IRestClient restClient, ILogger logger)
         {
@@ -39,8 +39,9 @@ namespace RestsharpTests
 
                 return response;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine("Ошибка! " + e);
                 // Handle exceptions in your CUSTOM CODE (restSharp will never throw itself)
             }
             finally
