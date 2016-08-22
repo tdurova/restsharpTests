@@ -25,15 +25,13 @@ namespace RestsharpTests.tests
         public void Login()
         {
             var token = helperBase.GetAuthToken(Config.AppLogin, Config.AppPassword);
-
-            RestClient.Authenticator = new OAuth2UriQueryParameterAuthenticator(token.access_token); //works
-
             var request = new RestRequest("api/frontend/v1/profiles/5", Method.GET);
-            RestClient.Authenticator.Authenticate(RestClient, request);
-
-            // execute the request
-            IRestResponse response = RestClient.Execute(request);
             
+            helperBase.SetAccessToken(request, token.access_token);
+            RestClient.Execute(request);
+
+            helperBase.ClearAccessToken();
+            RestClient.Execute(request);
 
         }
     }

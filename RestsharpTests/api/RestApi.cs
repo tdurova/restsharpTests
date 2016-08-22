@@ -36,5 +36,6 @@ namespace RestsharpTests
         }*/
 
         public static ILogger Logger { get; set; }
+
     }
 }

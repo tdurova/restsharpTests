@@ -19,11 +19,10 @@ namespace RestsharpTests.helpers
     {
         public string AccessToken { get; set; }
         private static ILogger logger = LogManager.GetCurrentClassLogger();
+        public RestApi RestApi = new RestApi(RestsharpClient.Client, logger);
 
         public ResponseToken GetAuthToken(string username, string password)
         {
-            RestApi RestApi = new RestApi(RestsharpClient.Client, logger);
-
             var cookieJar = new CookieContainer();
             RestsharpClient.Client.CookieContainer = cookieJar;
 
@@ -36,8 +35,7 @@ namespace RestsharpTests.helpers
             request.AddParameter("client_secret", Config.ClientSecret);
 
             var response = RestsharpClient.Client.Execute(request);
-
-            RestApi.Execute(request);
+            //RestApi.Execute(request);
 
             var token = JsonConvert.DeserializeObject<ResponseToken>(response.Content);
 
@@ -65,6 +63,20 @@ namespace RestsharpTests.helpers
             public string token_type { get; set; }
             public string scope { get; set; }
             public string refresh_token { get; set; }
+        }
+
+        public void SetAccessToken(IRestRequest request, string accessToken)
+        {
+            if (accessToken != null)
+            {
+                request.AddHeader("Authorization", "Bearer " + accessToken);
+                // $this->headers['Authorization'] = "Bearer {$this->access_token}";
+            }
+        }
+
+        public void ClearAccessToken()
+        {
+            RestsharpClient.Client.RemoveDefaultParameter("Authorization");
         }
     }
 }

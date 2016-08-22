@@ -16,7 +16,7 @@ namespace RestsharpTests.tests
         public void RunBeforeAnyTests()
         {
             //var client = new RestClient();
-            RestsharpClient.Client.BaseUrl = new Uri(Config.ApplicationMainUrl);
+            RestClient.BaseUrl = new Uri(Config.ApplicationMainUrl);
         }
 
         [TearDown]
