@@ -19,22 +19,9 @@ namespace RestsharpTests.helpers
     {
         public string AccessToken { get; set; }
         private static ILogger logger = LogManager.GetCurrentClassLogger();
-        
 
         public ResponseToken GetAuthToken(string username, string password)
         {
-            LogManager.ThrowExceptions = true;
-            logger.Info("Program started");
-            //  Find the correct target
-            var fileTarget = (FileTarget)LogManager.Configuration.FindTargetByName("fullLog");
-            //  Using the target, get the full path to the log file
-            var logEventInfo = new LogEventInfo { TimeStamp = DateTime.Now };
-            string fileName = fileTarget.FileName.Render(logEventInfo);
-            if (!File.Exists(fileName))
-                throw new Exception("Log file does not exist.");
-
-            Console.WriteLine(fileName);
-
             RestApi Api = new RestApi(RestsharpClient.Client, logger);
 
             var cookieJar = new CookieContainer();
@@ -55,6 +42,20 @@ namespace RestsharpTests.helpers
             var token = JsonConvert.DeserializeObject<ResponseToken>(response.Content);
 
             return token;
+        }
+
+        protected FileTarget GetNLogfilePath()
+        {
+            LogManager.ThrowExceptions = true;
+            //  Find the correct target
+            var fileTarget = (FileTarget) LogManager.Configuration.FindTargetByName("fullLog");
+            //  Using the target, get the full path to the log file
+            var logEventInfo = new LogEventInfo {TimeStamp = DateTime.Now};
+            string fileName = fileTarget.FileName.Render(logEventInfo);
+            if (!File.Exists(fileName))
+                throw new Exception("Log file does not exist.");
+            Console.WriteLine(fileName);
+            return fileTarget;
         }
 
         public class ResponseToken

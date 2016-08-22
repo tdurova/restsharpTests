@@ -115,7 +115,7 @@ namespace RestsharpTests
                     errorMessage = response.ErrorMessage,
                 };
 
-                return string.Format( "Request completed in {0} ms, Request: {1}, Response: {2}",
+                return string.Format("Request completed in {0} ms,\nRequest: {1},\nResponse: {2}",
                     durationMs, JsonConvert.SerializeObject(requestToLog),
                     JsonConvert.SerializeObject(responseToLog)); 
             });
