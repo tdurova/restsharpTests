@@ -22,7 +22,7 @@ namespace RestsharpTests.helpers
 
         public ResponseToken GetAuthToken(string username, string password)
         {
-            RestApi Api = new RestApi(RestsharpClient.Client, logger);
+            RestApi RestApi = new RestApi(RestsharpClient.Client, logger);
 
             var cookieJar = new CookieContainer();
             RestsharpClient.Client.CookieContainer = cookieJar;
@@ -37,7 +37,7 @@ namespace RestsharpTests.helpers
 
             var response = RestsharpClient.Client.Execute(request);
 
-            Api.Execute(request);
+            RestApi.Execute(request);
 
             var token = JsonConvert.DeserializeObject<ResponseToken>(response.Content);
 

@@ -71,10 +71,8 @@
   <ItemGroup>
     <Compile Include="api\RestsharpClient.cs" />
     <Compile Include="config\Config.cs" />
-    <Compile Include="helpers\DirAppend.cs" />
     <Compile Include="api\RestApiBase.cs" />
     <Compile Include="api\RestApi.cs" />
-    <Compile Include="helpers\RestSchemaValidator.cs" />
     <Compile Include="tests\MyTest.cs" />
     <Compile Include="helpers\HelperBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -108,16 +108,16 @@ namespace RestsharpTests
                 var responseToLog = new
                 {
                     statusCode = response.StatusCode,
-                    content = response.Content,
                     headers = response.Headers,
                     // The Uri that actually responded (could be different from the requestUri if a redirection occurred)
                     responseUri = response.ResponseUri,
                     errorMessage = response.ErrorMessage,
+                    content = response.Content
                 };
 
                 return string.Format("Request completed in {0} ms,\nRequest: {1},\nResponse: {2}",
                     durationMs, JsonConvert.SerializeObject(requestToLog),
-                    JsonConvert.SerializeObject(responseToLog)); 
+                JsonConvert.SerializeObject(responseToLog)); 
             });
         }
     }

@@ -10,6 +10,8 @@ namespace RestsharpTests.tests
 {
     public class TestBase
     {
+        protected IRestClient RestClient = RestsharpClient.Client;
+
         [SetUp]
         public void RunBeforeAnyTests()
         {
