@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RestSharp;
+using RestSharp.Authenticators;
 
-namespace RestsharpTests
+namespace RestsharpExtension
 {
     public static class RestsharpClient
     {

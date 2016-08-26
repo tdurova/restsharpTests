@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using RestsharpExtension;
 using RestSharp;
 
 namespace RestsharpTests.tests
@@ -17,13 +18,13 @@ namespace RestsharpTests.tests
         {
             //var client = new RestClient();
             RestClient.BaseUrl = new Uri(Config.ApplicationMainUrl);
+
         }
 
         [TearDown]
         public void RunAfterAnyTests()
         {
             // Clear up code here.
-            
         }
     }
 }

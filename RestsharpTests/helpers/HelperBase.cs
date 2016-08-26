@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NLog;
 using NLog.Targets;
+using RestsharpExtension;
 using RestSharp;
 using RestSharp.Authenticators;
 
@@ -65,18 +66,31 @@ namespace RestsharpTests.helpers
             public string refresh_token { get; set; }
         }
 
-        public void SetAccessToken(IRestRequest request, string accessToken)
+        public void Authenticate(IRestRequest request, string accessToken)
         {
             if (accessToken != null)
             {
                 request.AddHeader("Authorization", "Bearer " + accessToken);
                 // $this->headers['Authorization'] = "Bearer {$this->access_token}";
             }
+
+            // only add the Authorization parameter if it hasn't been added.
+            if (!request.Parameters.Any(p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase)))
+            {
+                request.AddParameter("access_token", accessToken, ParameterType.GetOrPost);
+            }
         }
 
-        public void ClearAccessToken()
+
+        public void Deauthenticate(IRestClient client, IRestRequest request)
         {
-            RestsharpClient.Client.RemoveDefaultParameter("Authorization");
+            Parameter parameter = client.DefaultParameters.SingleOrDefault(
+                p => p.Name.Equals("access_token", StringComparison.OrdinalIgnoreCase));
+
+            if (request.Parameters.Any(p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase)))
+            {
+                client.DefaultParameters.Remove(parameter);
+            }
         }
     }
 }
