@@ -21,7 +21,7 @@ namespace RestsharpTests.tests
     public class MyTests : TestBase
     {
         HelperBase helperBase = new HelperBase();
-
+        
         [Test]
         public void Login()
         {
@@ -32,12 +32,14 @@ namespace RestsharpTests.tests
             RestClient.Execute(request);
             helperBase.RestApi.Execute(request);
 
-            helperBase.Deauthenticate(RestClient,request);
+            helperBase.DeauthenticateRequest(request);
+            helperBase.DeauthenticateClient(RestClient);
             RestClient.Execute(request);
+            helperBase.RestApi.Execute(request);
 
             //RestClient.Authenticator.Authenticate(RestClient, request);
             //RestClient.Authenticator = new OAuth2UriQueryParameterAuthenticator(token.access_token); //works
-            //((OAuth2UriQueryParameterAuthenticator)RestClient.Authenticator).Deauthenticate(RestClient, request);
+            //((OAuth2UriQueryParameterAuthenticator)RestClient.Authenticator).DeauthenticateRequest(RestClient, request);
             //((OAuth2UriQueryParameterAuthenticator)RestClient.Authenticator).MyAuthenticate(RestClient, request);
         }
     }

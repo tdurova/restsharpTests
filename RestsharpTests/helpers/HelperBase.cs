@@ -68,28 +68,37 @@ namespace RestsharpTests.helpers
 
         public void Authenticate(IRestRequest request, string accessToken)
         {
-            if (accessToken != null)
+            if (accessToken != null && !request.Parameters.Any(p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase)))
             {
                 request.AddHeader("Authorization", "Bearer " + accessToken);
-                // $this->headers['Authorization'] = "Bearer {$this->access_token}";
             }
 
-            // only add the Authorization parameter if it hasn't been added.
-            if (!request.Parameters.Any(p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase)))
+            /*if (!request.Parameters.Any(p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase)))
             {
                 request.AddParameter("access_token", accessToken, ParameterType.GetOrPost);
-            }
+            }*/
         }
 
 
-        public void Deauthenticate(IRestClient client, IRestRequest request)
+        public void DeauthenticateRequest(IRestRequest request)
         {
-            Parameter parameter = client.DefaultParameters.SingleOrDefault(
-                p => p.Name.Equals("access_token", StringComparison.OrdinalIgnoreCase));
+            Parameter requestParameter = request.Parameters.SingleOrDefault(
+                p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase));
 
             if (request.Parameters.Any(p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase)))
             {
-                client.DefaultParameters.Remove(parameter);
+                request.Parameters.Remove(requestParameter);
+            }
+        }
+
+        public void DeauthenticateClient(IRestClient client)
+        {
+            Parameter clientParameter = client.DefaultParameters.SingleOrDefault(
+                p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase));
+
+            if (client.DefaultParameters.Any(p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase)))
+            {
+                client.DefaultParameters.Remove(clientParameter);
             }
         }
     }

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 using NUnit.Framework;
 using RestsharpExtension;
 using RestSharp;
+using Logger = NUnit.Framework.Internal.Logger;
 
 namespace RestsharpTests.tests
 {
@@ -18,7 +20,7 @@ namespace RestsharpTests.tests
         {
             //var client = new RestClient();
             RestClient.BaseUrl = new Uri(Config.ApplicationMainUrl);
-
+            
         }
 
         [TearDown]
