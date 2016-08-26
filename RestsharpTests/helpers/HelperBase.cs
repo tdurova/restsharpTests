@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -72,33 +73,56 @@ namespace RestsharpTests.helpers
             {
                 request.AddHeader("Authorization", "Bearer " + accessToken);
             }
-
-            /*if (!request.Parameters.Any(p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase)))
-            {
-                request.AddParameter("access_token", accessToken, ParameterType.GetOrPost);
-            }*/
         }
 
-
-        public void DeauthenticateRequest(IRestRequest request)
+        public void Authenticate(IRestClient client, string accessToken)
         {
-            Parameter requestParameter = request.Parameters.SingleOrDefault(
+            if (accessToken != null && !client.DefaultParameters.Any(p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase)))
+            {
+                Parameter clientParameter = new Parameter
+                {
+                    /*Name = "access_token",
+                    Value = accessToken,
+                    Type = ParameterType.GetOrPost*/
+                    Name = "Authorization",
+                    Value = "Bearer " + accessToken,
+                    Type = ParameterType.HttpHeader
+                };
+                client.DefaultParameters.Add(clientParameter);
+            }
+        }
+
+        public void Deauthenticate(IRestRequest request)
+        {
+            Parameter parameter = request.Parameters.SingleOrDefault(
                 p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase));
 
             if (request.Parameters.Any(p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase)))
             {
-                request.Parameters.Remove(requestParameter);
+                request.Parameters.Remove(parameter);
             }
         }
 
-        public void DeauthenticateClient(IRestClient client)
+        public void Deauthenticate(IRestClient client, List<IRestRequest> requests)
         {
-            Parameter clientParameter = client.DefaultParameters.SingleOrDefault(
+            Parameter parameter1 = client.DefaultParameters.SingleOrDefault(
                 p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase));
 
             if (client.DefaultParameters.Any(p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase)))
             {
-                client.DefaultParameters.Remove(clientParameter);
+                client.DefaultParameters.Remove(parameter1);
+                client.DefaultParameters.Clear();
+            }
+
+            foreach (var request in requests)
+            {
+                Parameter parameter2 = request.Parameters.SingleOrDefault(
+                p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase));
+
+                if (request.Parameters.Any(p => p.Name.Equals("Authorization", StringComparison.OrdinalIgnoreCase)))
+                {
+                    request.Parameters.Remove(parameter2);
+                }
             }
         }
     }

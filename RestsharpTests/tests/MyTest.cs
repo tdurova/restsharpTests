@@ -28,18 +28,21 @@ namespace RestsharpTests.tests
             var token = helperBase.GetAuthToken(Config.AppLogin, Config.AppPassword);
             var request = new RestRequest("api/frontend/v1/profiles/5", Method.GET);
             
-            helperBase.Authenticate(request, token.access_token);
+            //helperBase.Authenticate(request, token.access_token);
+            helperBase.Authenticate(RestClient,token.access_token);
             RestClient.Execute(request);
             helperBase.RestApi.Execute(request);
 
-            helperBase.DeauthenticateRequest(request);
-            helperBase.DeauthenticateClient(RestClient);
+            //helperBase.Deauthenticate(request);
+            List<IRestRequest> requests = new List<IRestRequest>();
+                requests.Add(request);
+            helperBase.Deauthenticate(RestClient, new List<IRestRequest>(requests));
             RestClient.Execute(request);
             helperBase.RestApi.Execute(request);
 
             //RestClient.Authenticator.Authenticate(RestClient, request);
             //RestClient.Authenticator = new OAuth2UriQueryParameterAuthenticator(token.access_token); //works
-            //((OAuth2UriQueryParameterAuthenticator)RestClient.Authenticator).DeauthenticateRequest(RestClient, request);
+            //((OAuth2UriQueryParameterAuthenticator)RestClient.Authenticator).Deauthenticate(RestClient, request);
             //((OAuth2UriQueryParameterAuthenticator)RestClient.Authenticator).MyAuthenticate(RestClient, request);
         }
     }
